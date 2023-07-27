@@ -2,5 +2,5 @@
     <string name="app_name">Eduzo</string>
     <string name="get_started">Get Started</string>
     <string name="login_link_text"><u>Log in</u></string>
-
+<!-- Todo: change all hardcoded text to extracted resource -->
 </resources>
