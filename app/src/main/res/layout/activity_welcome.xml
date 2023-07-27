@@ -6,59 +6,116 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".WelcomeActivity">
+        <!--   TODO: clean the scrap code before finalizing     -->
+<!-- Idea Scraped -->
+<!--        <ImageView-->
+<!--            android:id="@+id/ivLogo"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:contentDescription="Logo"-->
+<!--            android:src="@drawable/eduzo_logo"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/fragSignUp"-->
+<!--            app:layout_constraintVertical_weight="1"-->
+<!--            />-->
 
+<!--        <fragment-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:id="@+id/fragSignUp"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/ivLogo"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/btnSignUp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintVertical_weight="2"-->
+<!--            android:name="com.bitAndroid.eduzo.WelcomeSignUpFragment"-->
+<!--            android:layout_marginStart="12dp"-->
+<!--            android:layout_marginEnd="12dp"-->
+<!--            />-->
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:id="@+id/btnSignUp"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/fragSignUp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toStartOf="@id/btnSignIn"-->
+<!--            android:text="Sign Up"-->
+<!--            android:textColor="@color/grey"-->
+<!--            app:layout_constraintVertical_weight=".2"-->
+<!--            android:background="@color/btnSelected"-->
+<!--            />-->
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:id="@+id/btnSignIn"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/fragSignUp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@id/btnSignUp"-->
+<!--            android:text="Sign In"-->
+<!--            android:textColor="@color/white"-->
+<!--            app:layout_constraintVertical_weight=".2"-->
+<!--            android:background="@color/btnUnselected"-->
+<!--            />-->
+
+<!--   Idea 2     -->
         <ImageView
-            android:id="@+id/ivLogo"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:contentDescription="Logo"
-            android:src="@drawable/eduzo_logo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/ivStudents"
+            android:src="@drawable/young_students"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/fragSignUp"
-            app:layout_constraintVertical_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:scaleType="centerInside"
+            app:layout_constraintVertical_weight="2"
+            app:layout_constraintBottom_toTopOf="@id/tvHeading"
+            android:paddingTop="20dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="Get Connect to the best Mentors"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:id="@+id/tvHeading"
+            app:layout_constraintTop_toBottomOf="@id/ivStudents"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvSlogan"
+            app:layout_constraintVertical_weight=".5"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/tvSlogan"
+            android:text="Easy way to connect to mentor and get advise solution of design"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tvHeading"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_weight=".2"
+            app:layout_constraintBottom_toTopOf="@id/btnGoogle"
             />
 
-        <fragment
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/fragSignUp"
-            app:layout_constraintTop_toBottomOf="@id/ivLogo"
-            app:layout_constraintBottom_toTopOf="@id/btnSignUp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_weight="2"
-            android:name="com.bitAndroid.eduzo.WelcomeSignUpFragment"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            />
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:id="@+id/btnSignUp"
-            app:layout_constraintTop_toBottomOf="@id/fragSignUp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btnSignIn"
-            android:text="Sign Up"
-            android:textColor="@color/grey"
-            app:layout_constraintVertical_weight=".2"
-            android:background="@color/btnSelected"
-            />
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:id="@+id/btnSignIn"
-            app:layout_constraintTop_toBottomOf="@id/fragSignUp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btnSignUp"
-            android:text="Sign In"
+            android:id="@+id/btnGoogle"
+            android:text="Login with Google"
+            android:textAllCaps="false"
             android:textColor="@color/white"
+            android:background="#ff4b26"
+            android:padding="20dp"
+            app:layout_constraintTop_toBottomOf="@id/tvSlogan"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_weight=".2"
-            android:background="@color/btnUnselected"
+            android:drawableStart="@drawable/google_logo"
             />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
