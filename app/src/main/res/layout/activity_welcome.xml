@@ -29,6 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_weight="2"
+            android:name="com.bitAndroid.eduzo.WelcomeSignUpFragment"
             />
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="0dp"
@@ -39,7 +40,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnSignIn"
             android:text="Sign Up"
-            app:layout_constraintVertical_weight=".5"
+            android:textColor="@color/grey"
+            app:layout_constraintVertical_weight=".2"
+            android:background="@color/btnSelected"
             />
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="0dp"
@@ -50,7 +53,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnSignUp"
             android:text="Sign In"
-            app:layout_constraintVertical_weight=".5"
+            android:textColor="@color/white"
+            app:layout_constraintVertical_weight=".2"
+            android:background="@color/btnUnselected"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
