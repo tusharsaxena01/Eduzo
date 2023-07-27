@@ -30,6 +30,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_weight="2"
             android:name="com.bitAndroid.eduzo.WelcomeSignUpFragment"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
             />
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="0dp"
