@@ -1,4 +1,4 @@
-package com.bitAndroid.eduzo;
+package com.bitAndroid.eduzo.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.bitAndroid.eduzo.R;
 
 public class SplashActivity extends AppCompatActivity {
 

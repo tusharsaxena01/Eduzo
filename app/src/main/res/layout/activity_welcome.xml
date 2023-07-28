@@ -5,112 +5,67 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".WelcomeActivity"
+        tools:context=".Activities.WelcomeActivity"
         android:background="#f4f4f4">
-        <!--   TODO: clean the scrap code before finalizing     -->
-<!-- Idea Scraped -->
-<!--        <ImageView-->
-<!--            android:id="@+id/ivLogo"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:contentDescription="Logo"-->
-<!--            android:src="@drawable/eduzo_logo"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/fragSignUp"-->
-<!--            app:layout_constraintVertical_weight="1"-->
-<!--            />-->
-
-<!--        <fragment-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:id="@+id/fragSignUp"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/ivLogo"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/btnSignUp"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintVertical_weight="2"-->
-<!--            android:name="com.bitAndroid.eduzo.WelcomeSignUpFragment"-->
-<!--            android:layout_marginStart="12dp"-->
-<!--            android:layout_marginEnd="12dp"-->
-<!--            />-->
-<!--        <androidx.appcompat.widget.AppCompatButton-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:id="@+id/btnSignUp"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/fragSignUp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toStartOf="@id/btnSignIn"-->
-<!--            android:text="Sign Up"-->
-<!--            android:textColor="@color/grey"-->
-<!--            app:layout_constraintVertical_weight=".2"-->
-<!--            android:background="@color/btnSelected"-->
-<!--            />-->
-<!--        <androidx.appcompat.widget.AppCompatButton-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:id="@+id/btnSignIn"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/fragSignUp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toEndOf="@id/btnSignUp"-->
-<!--            android:text="Sign In"-->
-<!--            android:textColor="@color/white"-->
-<!--            app:layout_constraintVertical_weight=".2"-->
-<!--            android:background="@color/btnUnselected"-->
-<!--            />-->
-
-<!--   Idea 2     -->
-        <ImageView
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_arrow_back_ios_24"
-            android:background="@drawable/bg_round"
-            android:backgroundTint="@color/grey"
-            android:backgroundTintMode="screen"
-            android:scaleType="centerCrop"
-            android:padding="10dp"
+            android:backgroundTint="#CAE7FE"
+            android:backgroundTintMode="src_over"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:flow_horizontalAlign="start"
             android:layout_margin="10dp"
-            android:id="@+id/ivBack"
+            android:id="@+id/fabBack"
+            app:fabSize="mini"
+            app:fabCustomSize="40dp"
+            android:elevation="0dp"
             />
-        <ImageView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/ivStudents"
-            android:src="@drawable/young_students"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:scaleType="centerInside"
-            app:layout_constraintVertical_weight="2"
             app:layout_constraintBottom_toTopOf="@id/tvHeading"
-            android:paddingTop="20dp"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="1.5"
+            android:id="@+id/ivStudents"
+            >
+            <ImageView
+                android:id="@+id/ivImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/study_tablet_image"
+                android:layout_alignParentTop="true"
+                />
+        </RelativeLayout>
+
         <TextView
+            android:id="@+id/tvHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:paddingBottom="0dp"
             android:text="Get Started with Education Zone"
             android:textColor="@color/black"
             android:textSize="32sp"
             android:textStyle="bold"
-            android:id="@+id/tvHeading"
-            app:layout_constraintTop_toBottomOf="@id/ivStudents"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/tvSlogan"
-            android:paddingBottom="0dp"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivStudents" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvSlogan"
             android:text="Education on your fingertips."
             android:textSize="18sp"
+            android:textColor="@color/grey"
             android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@id/tvHeading"
             app:layout_constraintStart_toStartOf="parent"
@@ -175,6 +130,7 @@
                 android:layout_height="wrap_content"
                 android:text="Already have account? "
                 android:textSize="15sp"
+                android:textColor="@color/grey"
                 />
             <TextView
                 android:layout_width="wrap_content"

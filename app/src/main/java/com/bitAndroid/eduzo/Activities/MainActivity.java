@@ -1,7 +1,8 @@
-package com.bitAndroid.eduzo;
+package com.bitAndroid.eduzo.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -21,10 +22,8 @@ public class MainActivity extends AppCompatActivity {
         binding.btnGetStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int get_started = 1;
-                sp.edit()
-                        .putInt("first_visit", get_started)
-                        .apply();
+                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "558797869673",
+    "project_id": "eduzo-766c6",
+    "storage_bucket": "eduzo-766c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558797869673:android:978505e81dab5661be08f8",
+        "android_client_info": {
+          "package_name": "com.bitAndroid.eduzo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "558797869673-7j6bmbesleulq5cg4ir2g1dq3dcdasm6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADWu7kDlKpQyFerxLEHjB0YQCnUT4RGj4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "558797869673-7j6bmbesleulq5cg4ir2g1dq3dcdasm6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
