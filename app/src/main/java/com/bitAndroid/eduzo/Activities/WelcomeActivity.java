@@ -45,7 +45,7 @@ public class WelcomeActivity extends AppCompatActivity {
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
 
 
-        binding.fabBack.setOnClickListener(new View.OnClickListener() {
+        binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent getStartedIntent = new Intent(WelcomeActivity.this, MainActivity.class);
@@ -76,6 +76,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Todo: add login with email
                 Intent loginActivityIntent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                loginActivityIntent.putExtra("login_register","register");
                 startActivity(loginActivityIntent);
             }
         });
@@ -84,8 +85,9 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Todo: add intent to move to login page
-//                Intent loginIntent = new Intent(WelcomeActivity.this, LoginActivity.class);
-//                startActivity(loginIntent);
+                Intent loginIntent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                loginIntent.putExtra("login_register","login");
+                startActivity(loginIntent);
             }
         });
     }
