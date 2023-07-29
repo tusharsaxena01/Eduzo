@@ -47,9 +47,10 @@ public class LoginActivity extends AppCompatActivity {
         if(prevIntent.getStringExtra("login_register").equals("register")){
             // register working here
             binding.tvHeaderText.setText("Register to Continue");
+            assert stub != null;
             stub.setLayoutResource(R.layout.layout_register);
             stub.inflate();
-            registerBinding = LayoutRegisterBinding.inflate(getLayoutInflater());
+            registerBinding = LayoutRegisterBinding.inflate(LayoutInflater.from(this));
 
 
         } else if (prevIntent.getStringExtra("login_register").equals("login")) {
@@ -57,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             binding.tvHeaderText.setText("Welcome Back");
             stub.setLayoutResource(R.layout.layout_login);
             stub.inflate();
-            loginBinding = LayoutLoginBinding.inflate(getLayoutInflater());
+            loginBinding = LayoutLoginBinding.inflate(LayoutInflater.from(this));
 
         }
 

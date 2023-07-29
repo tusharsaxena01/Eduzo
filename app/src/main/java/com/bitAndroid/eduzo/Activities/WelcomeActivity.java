@@ -75,9 +75,10 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Todo: add login with email
-                Intent loginActivityIntent = new Intent(WelcomeActivity.this, LoginActivity.class);
-                loginActivityIntent.putExtra("login_register","register");
-                startActivity(loginActivityIntent);
+//                Intent loginActivityIntent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                Intent registerActivityIntent = new Intent(WelcomeActivity.this, RegisterActivity.class);
+                registerActivityIntent.putExtra("login_register","register");
+                startActivity(registerActivityIntent);
             }
         });
 
