@@ -71,32 +71,33 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // Register layout functionality
-        registerBinding.cbTerms.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(registerBinding.cbTerms.isChecked()){
-                    registerBinding.btnRegister.setEnabled(true);
-                }else{
-                    registerBinding.btnRegister.setEnabled(false);
+        if(registerBinding != null){
+            registerBinding.cbTerms.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (registerBinding.cbTerms.isChecked()) {
+                        registerBinding.btnRegister.setEnabled(true);
+                    } else {
+                        registerBinding.btnRegister.setEnabled(false);
+                    }
                 }
-            }
-        });
+            });
 
-        registerBinding.btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(validate(registerBinding, prevIntent.getStringExtra("login_register"))){
-                    // Todo: add register working
-                    String text = "Name"+registerBinding.etName.getText().toString()
-                            +", Email: "+registerBinding.etEmail.getText().toString()
-                            +", Mobile No: "+registerBinding.etMobile.getText().toString()
-                            +", Password: "+registerBinding.etPassword.getText().toString();
-                    Toast.makeText(LoginActivity.this, text, Toast.LENGTH_SHORT).show();
-                    Log.e("check", text);
+            registerBinding.btnRegister.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (validate(registerBinding, prevIntent.getStringExtra("login_register"))) {
+                        // Todo: add register working
+                        String text = "Name" + registerBinding.etName.getText().toString()
+                                + ", Email: " + registerBinding.etEmail.getText().toString()
+                                + ", Mobile No: " + registerBinding.etMobile.getText().toString()
+                                + ", Password: " + registerBinding.etPassword.getText().toString();
+                        Toast.makeText(LoginActivity.this, text, Toast.LENGTH_SHORT).show();
+                        Log.e("check", text);
+                    }
                 }
-            }
-        });
-
+            });
+        }
 
 
 //
