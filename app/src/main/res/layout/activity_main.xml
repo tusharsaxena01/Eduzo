@@ -34,7 +34,7 @@
             android:background="@drawable/get_started_btn"
             android:drawableEnd="@drawable/baseline_arrow_forward_24"
             android:padding="10dp"
-            android:layout_margin="10dp"
+            android:layout_margin="20dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

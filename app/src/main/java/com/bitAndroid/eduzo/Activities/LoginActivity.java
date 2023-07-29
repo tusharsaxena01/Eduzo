@@ -29,7 +29,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         firebaseAuth = FirebaseAuth.getInstance();
 
-        binding.tvSignInName.setText("Signed in as "+firebaseAuth.getCurrentUser().getDisplayName());
+        String phoneNo = firebaseAuth.getCurrentUser().getPhoneNumber();
+        String email = firebaseAuth.getCurrentUser().getEmail();
+        binding.tvSignInName.setText("Signed in as "+
+                firebaseAuth.getCurrentUser().getDisplayName()+
+                "\n Phone No:"+phoneNo+
+                "\n Email: "+email);
         // Todo: remove this code, this is temporary
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -39,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         // get display picture
 
 //        Uri dp = firebaseAuth.getCurrentUser().getPhotoUrl();
+
 
         URL url = null;
         try {
