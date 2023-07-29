@@ -51,7 +51,10 @@
             android:paddingBottom="0dp"
             android:text="Get Started with Education Zone"
             android:textColor="@color/black"
-            android:textSize="32sp"
+            android:textSize="30sp"
+            android:textAlignment="gravity"
+            android:autoSizeTextType="uniform"
+            app:flow_horizontalAlign="center"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/tvSlogan"
             app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +126,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginVertical="20dp"
+            android:layout_marginVertical="30dp"
             >
             <TextView
                 android:layout_width="wrap_content"
