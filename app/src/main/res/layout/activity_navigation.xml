@@ -9,14 +9,12 @@
         android:background="#00a5ff">
 
         <ProgressBar
-            android:layout_width="100dp"
-            android:layout_height="100dp"
             android:id="@+id/pbLoading"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="gone"
+            style="@style/pbLoading"
             />
 
         <androidx.fragment.app.FragmentContainerView

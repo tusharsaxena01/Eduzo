@@ -53,11 +53,12 @@
 
     <style name="AppTheme">AppTheme</style>
 
-    <style name="pbLoading" tools:ignore="AaptCrash">
+    <style name="pbLoading">
         <item name="android:layout_width">100dp</item>
         <item name="android:layout_height">100dp</item>
         <item name="android:layout_centerInParent">true</item>
         <item name="android:visibility">gone</item>
+        <item name="elevation">20dp</item>
     </style>
 
     

@@ -7,12 +7,8 @@
     tools:context=".Activities.LoginActivity"
     style="@style/loginParent">
     <ProgressBar
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerInParent="true"
-        android:elevation="20dp"
         android:id="@+id/pbLoading"
-        android:visibility="gone"/>
+        style="@style/pbLoading"/>
         />
     <ScrollView
         style="@style/parent">

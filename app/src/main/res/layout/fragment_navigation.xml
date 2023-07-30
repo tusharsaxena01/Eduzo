@@ -4,6 +4,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/pvLoading"
+            style="@style/pbLoading"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
         <ScrollView
             style="@style/parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,9 +92,15 @@
         </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                style="@style/parent"
-                android:layout_marginHorizontal="30dp"
-                android:layout_below="@id/llHeader">
+                android:id="@+id/rvNavigation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/email_btn_round"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="-10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/llHeader"
+                android:elevation="10dp">
 
             </androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
