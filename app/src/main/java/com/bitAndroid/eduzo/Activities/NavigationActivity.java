@@ -31,7 +31,7 @@ public class NavigationActivity extends AppCompatActivity {
         String uuid = firebaseAuth.getCurrentUser().getUid();
 
 
-
+        // Setting fragment container to change
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragContainer, navigationFragment)
