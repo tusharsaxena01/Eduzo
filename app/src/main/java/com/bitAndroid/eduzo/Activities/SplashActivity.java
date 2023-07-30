@@ -11,6 +11,8 @@ import android.util.Log;
 import com.bitAndroid.eduzo.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class SplashActivity extends AppCompatActivity {
 
     SharedPreferences sp;
@@ -25,16 +27,18 @@ public class SplashActivity extends AppCompatActivity {
         Intent mainActivity = new Intent(SplashActivity.this, MainActivity.class);
         Intent welcomeActivity = new Intent(SplashActivity.this, WelcomeActivity.class);
         Intent navigationActivity = new Intent(SplashActivity.this, NavigationActivity.class);
+        FirebaseAuth.getInstance().signOut();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 int first_visit = sp.getInt("first_visit", 0);
-                if(first_visit == 0)
+                if(first_visit == 0) {
                     startActivity(mainActivity);
-                else if (FirebaseAuth.getInstance().getCurrentUser().getEmail() == null)
-                    startActivity(navigationActivity);
-                else
+                    Log.e("Activity", "main activity");
+                }else{
+                    Log.e("Activity", "welcome activity");
                     startActivity(welcomeActivity);
+                }
                 finish();
             }
         }, 3000);

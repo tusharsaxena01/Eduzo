@@ -115,6 +115,9 @@ public class WelcomeActivity extends AppCompatActivity {
                         });
             } catch (ApiException e) {
                 throw new RuntimeException(e);
+            } catch (RuntimeException e){
+                // Todo: error dialog
+                // showErrorDialog();
             }
         }
 

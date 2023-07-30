@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class NavigationFragment extends Fragment {
     FragmentNavigationBinding binding;
     FirebaseAuth firebaseAuth;
@@ -31,7 +33,7 @@ public class NavigationFragment extends Fragment {
 
 
         // Layout Manipulation
-        String uid = firebaseAuth.getCurrentUser().getUid();
+        String uid = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
         firebaseDatabase.getReference()
                         .child("Registered Users")
                                 .child(uid)
