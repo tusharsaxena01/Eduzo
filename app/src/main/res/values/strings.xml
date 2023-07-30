@@ -4,6 +4,7 @@
     <string name="login_link_text"><u>Log in</u></string>
     <!-- Todo: change all hardcoded text to extracted resource -->
     <string name="register">REGISTER</string>
+    <string name="enter_email">ENTER EMAIL</string>
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
     <string name="signup_login_hint">Already have an account? Sign In</string>

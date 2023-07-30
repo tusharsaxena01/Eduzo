@@ -4,34 +4,28 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewStub;
 import android.widget.Toast;
 
-import com.bitAndroid.eduzo.R;
+import com.bitAndroid.eduzo.Classes.UserData;
 import com.bitAndroid.eduzo.databinding.ActivityLoginBinding;
-import com.bitAndroid.eduzo.databinding.LayoutLoginBinding;
-import com.bitAndroid.eduzo.databinding.LayoutRegisterBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
     FirebaseAuth firebaseAuth;
+    FirebaseDatabase firebaseDatabase;
 
 
     @Override
@@ -40,13 +34,22 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
 
-
+        // Navigation
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent welcomeIntent = new Intent(LoginActivity.this, WelcomeActivity.class);
                 startActivity(welcomeIntent);
+            }
+        });
+
+        binding.tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(registerIntent);
             }
         });
 
@@ -65,8 +68,16 @@ public class LoginActivity extends AppCompatActivity {
                                     binding.pbLoading.setVisibility(View.VISIBLE);
                                     if(task.isSuccessful()){
                                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                        @NonNull
+                                        String role = getRole(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+                                        getSharedPreferences("data", 0).edit()
+                                                .putString("role", role)
+                                                .putInt("first_visit", 1)
+                                                .apply();
+                                        Intent navigationIntent = new Intent(LoginActivity.this, NavigationActivity.class);
+                                        startActivity(navigationIntent);
                                     }else{
-                                        Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                     binding.pbLoading.setVisibility(View.GONE);
                                 }
@@ -75,6 +86,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // Forgot Password
+        binding.tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent forgotPasswordIntent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(forgotPasswordIntent);
+            }
+        });
 
 //
 //        String phoneNo = firebaseAuth.getCurrentUser().getPhoneNumber();
@@ -122,11 +141,32 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private String getRole(String uuid) {
+        final String[] role = new String[1];
+        firebaseDatabase.getReference()
+                .child("Registered Users")
+                .child(uuid)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        UserData data = snapshot.getValue(UserData.class);
+                        if(data != null){
+                            role[0] = data.getRole();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+        return role[0];
+    }
+
     private boolean validate(String email, String password) {
-        if(email != ""){
-            return password != "" && password.length() > 8;
-        }
-        return false;
+        if(email.equals(""))
+            return false;
+        return !password.equals("") && password.length() >= 8;
     }
 
 
