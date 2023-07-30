@@ -77,7 +77,6 @@ public class WelcomeActivity extends AppCompatActivity {
                 // Todo: add login with email
 //                Intent loginActivityIntent = new Intent(WelcomeActivity.this, LoginActivity.class);
                 Intent registerActivityIntent = new Intent(WelcomeActivity.this, RegisterActivity.class);
-                registerActivityIntent.putExtra("login_register","register");
                 startActivity(registerActivityIntent);
             }
         });
@@ -87,7 +86,6 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Todo: add intent to move to login page
                 Intent loginIntent = new Intent(WelcomeActivity.this, LoginActivity.class);
-                loginIntent.putExtra("login_register","login");
                 startActivity(loginIntent);
             }
         });

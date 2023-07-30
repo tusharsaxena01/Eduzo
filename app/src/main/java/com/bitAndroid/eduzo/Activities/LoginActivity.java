@@ -1,5 +1,6 @@
 package com.bitAndroid.eduzo.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -18,6 +19,9 @@ import com.bitAndroid.eduzo.R;
 import com.bitAndroid.eduzo.databinding.ActivityLoginBinding;
 import com.bitAndroid.eduzo.databinding.LayoutLoginBinding;
 import com.bitAndroid.eduzo.databinding.LayoutRegisterBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
@@ -28,8 +32,6 @@ public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
     FirebaseAuth firebaseAuth;
-    LayoutRegisterBinding registerBinding;
-    LayoutLoginBinding loginBinding;
 
 
     @Override
@@ -37,30 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        Intent prevIntent = getIntent();
         firebaseAuth = FirebaseAuth.getInstance();
-
-        // changing card
-        ViewStub stub = binding.icLayout.getViewStub();
-
-        // Todo: add login and register functionality here
-        if(prevIntent.getStringExtra("login_register").equals("register")){
-            // register working here
-            binding.tvHeaderText.setText("Register to Continue");
-            assert stub != null;
-            stub.setLayoutResource(R.layout.layout_register);
-            stub.inflate();
-            registerBinding = LayoutRegisterBinding.inflate(LayoutInflater.from(this));
-
-
-        } else if (prevIntent.getStringExtra("login_register").equals("login")) {
-            // login working here
-            binding.tvHeaderText.setText("Welcome Back");
-            stub.setLayoutResource(R.layout.layout_login);
-            stub.inflate();
-            loginBinding = LayoutLoginBinding.inflate(LayoutInflater.from(this));
-
-        }
 
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
@@ -71,34 +50,30 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Register layout functionality
-        if(registerBinding != null){
-            registerBinding.cbTerms.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (registerBinding.cbTerms.isChecked()) {
-                        registerBinding.btnRegister.setEnabled(true);
-                    } else {
-                        registerBinding.btnRegister.setEnabled(false);
-                    }
-                }
-            });
+        //Login functionality
 
-            registerBinding.btnRegister.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (validate(registerBinding, prevIntent.getStringExtra("login_register"))) {
-                        // Todo: add register working
-                        String text = "Name" + registerBinding.etName.getText().toString()
-                                + ", Email: " + registerBinding.etEmail.getText().toString()
-                                + ", Mobile No: " + registerBinding.etMobile.getText().toString()
-                                + ", Password: " + registerBinding.etPassword.getText().toString();
-                        Toast.makeText(LoginActivity.this, text, Toast.LENGTH_SHORT).show();
-                        Log.e("check", text);
-                    }
+        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = binding.etEmail.getText().toString();
+                String password = binding.etPassword.getText().toString();
+                if(validate(email, password)){
+                    firebaseAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    binding.pbLoading.setVisibility(View.VISIBLE);
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                    binding.pbLoading.setVisibility(View.GONE);
+                                }
+                            });
                 }
-            });
-        }
+            }
+        });
 
 
 //
@@ -147,25 +122,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    // register validation
-    private boolean validate(LayoutRegisterBinding registerBinding, String login_register) {
-
-        if(registerBinding.etName.getText().toString().equals("")){
-            registerBinding.etName.setError("Invalid Name");
-            return false;
-        } else if (registerBinding.etEmail.getText().toString().equals("")) {
-            registerBinding.etEmail.setError("Invalid Email");
-            return false;
-        } else if (registerBinding.etMobile.getText().toString().length() < 10) {
-            registerBinding.etMobile.setError("Invalid Mobile Number");
-            return false;
-        } else if (registerBinding.etPassword.getText().toString().length() < 8) {
-            registerBinding.etPassword.setError("Password must be of least length 8");
-            return false;
-        }else{
-            return true;
+    private boolean validate(String email, String password) {
+        if(email != ""){
+            return password != "" && password.length() > 8;
         }
-
+        return false;
     }
 
 
