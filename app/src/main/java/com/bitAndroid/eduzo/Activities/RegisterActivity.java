@@ -35,11 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         binding.cbTerms.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (binding.cbTerms.isChecked()) {
-                        binding.btnRegister.setEnabled(true);
-                    } else {
-                        binding.btnRegister.setEnabled(false);
-                    }
+                    binding.btnRegister.setEnabled(binding.cbTerms.isChecked());
                 }
             });
 
