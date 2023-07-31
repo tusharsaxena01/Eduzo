@@ -14,7 +14,7 @@
             android:gravity="center"
             android:padding="30dp"
             android:background="@drawable/email_btn_round"
-            android:elevation="10dp"
+            android:elevation="8dp"
             android:layout_margin="10dp">
         <ImageView
             android:layout_width="70dp"
@@ -28,7 +28,7 @@
             android:id="@+id/tvItemText"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginTop="5dp"
             />
         </LinearLayout>
