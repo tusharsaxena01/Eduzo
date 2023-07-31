@@ -1,4 +1,4 @@
-package com.bitAndroid.eduzo.Activities;
+package com.bitAndroid.eduzo.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.bitAndroid.eduzo.Classes.UserData;
+import com.bitAndroid.eduzo.classes.UserData;
 import com.bitAndroid.eduzo.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = binding.etEmail.getText().toString();
+                String email = binding.etEmail.getText().toString().trim();
                 String password = binding.etPassword.getText().toString();
                 if(validate(email, password)){
                     firebaseAuth.signInWithEmailAndPassword(email, password)

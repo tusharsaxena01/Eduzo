@@ -1,18 +1,19 @@
-package com.bitAndroid.eduzo.Activities;
+package com.bitAndroid.eduzo.activities;
+
+import static android.R.color.transparent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.bitAndroid.eduzo.R;
 import com.bitAndroid.eduzo.databinding.ActivityForgotPasswordBinding;
 import com.bitAndroid.eduzo.databinding.EmailSentDialogBinding;
+import com.bitAndroid.eduzo.databinding.ErrorDialogBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,7 +38,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         binding.btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = binding.etEmail.getText().toString();
+                String email = binding.etEmail.getText().toString().trim();
                 if(validate(email)){
 
                     firebaseAuth.sendPasswordResetEmail(email)
@@ -49,8 +50,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                         showResetEmailSentDialog();
                                         Toast.makeText(ForgotPasswordActivity.this, "Reset Link Sent to Email", Toast.LENGTH_SHORT).show();
                                     }
-                                    else
+                                    else {
+                                        showErrorDialog();
+                                        binding.etEmail.setError("Email Not Registered");
                                         Toast.makeText(ForgotPasswordActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
                 }
@@ -77,6 +81,22 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     }
 
+    private void showErrorDialog() {
+        ErrorDialogBinding errorDialogBinding = ErrorDialogBinding.inflate(getLayoutInflater());
+        errorDialogBinding.btnOkay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(errorDialogBinding.getRoot());
+        dialog = builder.create();
+        dialog.show();
+        errorDialogBinding.cardMain.setBackgroundResource(transparent);
+        dialog.getWindow().setBackgroundDrawableResource(transparent);
+    }
+
     private void showResetEmailSentDialog() {
         EmailSentDialogBinding emailSentDialogBinding = EmailSentDialogBinding.inflate(getLayoutInflater());
 //        emailSentDialogBinding.tvMessage.setText("Password Reset Email Sent!");
@@ -90,6 +110,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         builder.setView(emailSentDialogBinding.getRoot());
         dialog = builder.create();
         dialog.show();
+        emailSentDialogBinding.cardMain.setBackgroundResource(transparent);
+        dialog.getWindow().setBackgroundDrawableResource(transparent);
     }
 
     private boolean validate(String email) {

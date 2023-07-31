@@ -1,17 +1,22 @@
-package com.bitAndroid.eduzo.Activities;
+package com.bitAndroid.eduzo.activities;
+
+import static android.R.color.transparent;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.bitAndroid.eduzo.Classes.UserData;
-import com.bitAndroid.eduzo.R;
+import com.bitAndroid.eduzo.classes.UserData;
 import com.bitAndroid.eduzo.databinding.ActivityRegisterBinding;
+import com.bitAndroid.eduzo.databinding.ErrorDialogBinding;
+import com.bitAndroid.eduzo.databinding.SuccessDialogBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     ActivityRegisterBinding binding;
     FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabase;
+    AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +81,9 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, text, Toast.LENGTH_SHORT).show();
                             Log.e("check", text);
                             binding.pbLoading.setVisibility(View.VISIBLE);
-                            String name = binding.etName.getText().toString();;
-                            String mobileNo = binding.etMobile.getText().toString();
-                            String email = binding.etEmail.getText().toString();
+                            String name = binding.etName.getText().toString().trim();
+                            String mobileNo = binding.etMobile.getText().toString().trim();
+                            String email = binding.etEmail.getText().toString().trim();
                             String password = binding.etPassword.getText().toString();
                             firebaseAuth.createUserWithEmailAndPassword(email, password)
                                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -86,16 +92,53 @@ public class RegisterActivity extends AppCompatActivity {
 
                                             saveUser(name, mobileNo, email, password);
                                             // Todo: Create function
-//                                            showSuccessDialog("Registration");
+                                            showSuccessDialog("Registration Successful");
+
+                                            Intent navigationIntent = new Intent(RegisterActivity.this, NavigationActivity.class);
+                                            startActivity(navigationIntent);
                                         }
                                     });
-                        }else{
-                            binding.btnRegister.setError("Error");
+                            }else{
+                            showErrorDialog();
                             binding.pbLoading.setVisibility(View.GONE);
-                        }
+                            }
                 }
             });
 
+
+    }
+
+    private void showErrorDialog() {
+        ErrorDialogBinding errorDialogBinding = ErrorDialogBinding.inflate(getLayoutInflater());
+        errorDialogBinding.btnOkay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(errorDialogBinding.getRoot());
+        dialog = builder.create();
+        dialog.show();
+        errorDialogBinding.cardMain.setBackgroundResource(transparent);
+        dialog.getWindow().setBackgroundDrawableResource(transparent);
+    }
+
+    private void showSuccessDialog(String message) {
+
+        SuccessDialogBinding successDialogBinding = SuccessDialogBinding.inflate(getLayoutInflater());
+        successDialogBinding.btnOkay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(successDialogBinding.getRoot());
+        dialog = builder.create();
+        dialog.show();
+        successDialogBinding.cardMain.setBackgroundResource(transparent);
+        dialog.getWindow().setBackgroundDrawableResource(transparent);
 
     }
 
@@ -129,18 +172,28 @@ public class RegisterActivity extends AppCompatActivity {
             binding.pbLoading.setVisibility(View.VISIBLE);
             if(binding.etName.getText().toString().equals("")){
                 binding.etName.setError("Invalid Name");
+                getFocusOn(binding.etName);
                 return false;
             } else if (binding.etEmail.getText().toString().equals("")) {
                 binding.etEmail.setError("Invalid Email");
+                getFocusOn(binding.etEmail);
                 return false;
             } else if (binding.etMobile.getText().toString().length() < 10) {
                 binding.etMobile.setError("Invalid Mobile Number");
+                getFocusOn(binding.etMobile);
                 return false;
             } else if (binding.etPassword.getText().toString().length() < 8) {
                 binding.etPassword.setError("Password must be of least length 8");
+                getFocusOn(binding.etPassword);
                 return false;
             }else{
                 return true;
             }
+    }
+
+    private void getFocusOn(EditText field) {
+        field.setFocusable(true);
+        field.setFocusableInTouchMode(true);
+        field.requestFocus();
     }
 }

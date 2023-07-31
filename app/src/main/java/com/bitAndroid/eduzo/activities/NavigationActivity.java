@@ -1,4 +1,4 @@
-package com.bitAndroid.eduzo.Activities;
+package com.bitAndroid.eduzo.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.bitAndroid.eduzo.Classes.UserData;
-import com.bitAndroid.eduzo.Fragments.NavigationFragment;
+import com.bitAndroid.eduzo.classes.UserData;
+import com.bitAndroid.eduzo.fragments.NavigationFragment;
 import com.bitAndroid.eduzo.R;
 import com.bitAndroid.eduzo.databinding.ActivityNavigationBinding;
 import com.google.firebase.auth.FirebaseAuth;

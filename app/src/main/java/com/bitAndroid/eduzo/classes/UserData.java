@@ -1,4 +1,4 @@
-package com.bitAndroid.eduzo.Classes;
+package com.bitAndroid.eduzo.classes;
 
 public class UserData {
 

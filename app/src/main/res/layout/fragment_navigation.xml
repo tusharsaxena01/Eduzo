@@ -97,12 +97,11 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/email_btn_round"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="-10dp"
+                android:layout_marginTop="-5dp"
                 android:layout_alignParentBottom="true"
                 android:layout_below="@id/llHeader"
-                android:elevation="10dp">
+                android:elevation="10dp"/>
 
-            </androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
 
         </ScrollView>

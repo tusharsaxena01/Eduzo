@@ -4,7 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
-        tools:context=".Activities.RegisterActivity"
+        tools:context=".activities.RegisterActivity"
         style="@style/loginParent">
         <ProgressBar
             android:id="@+id/pbLoading"
@@ -134,7 +134,8 @@
                                 style="@style/parent"
                                 android:layout_marginTop="@dimen/signup_text_margin_top"
                                 app:boxStrokeWidth="0dp"
-                                app:boxStrokeWidthFocused="0dp">
+                                app:boxStrokeWidthFocused="0dp"
+                                app:passwordToggleEnabled="true">
                                 <EditText
                                     android:id="@+id/etPassword"
                                     android:layout_width="match_parent"

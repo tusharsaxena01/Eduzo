@@ -1,4 +1,4 @@
-package com.bitAndroid.eduzo.Activities;
+package com.bitAndroid.eduzo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,8 +10,6 @@ import android.util.Log;
 
 import com.bitAndroid.eduzo.R;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.Objects;
 
 public class SplashActivity extends AppCompatActivity {
 

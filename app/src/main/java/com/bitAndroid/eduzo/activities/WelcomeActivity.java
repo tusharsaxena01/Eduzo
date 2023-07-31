@@ -1,4 +1,4 @@
-package com.bitAndroid.eduzo.Activities;
+package com.bitAndroid.eduzo.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

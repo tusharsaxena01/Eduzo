@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Activities.NavigationActivity"
+        tools:context=".activities.NavigationActivity"
         android:background="#00a5ff">
 
         <ProgressBar
@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/fragContainer"
-            android:name="com.bitAndroid.eduzo.Fragments.NavigationFragment"
+            android:name="com.bitAndroid.eduzo.fragments.NavigationFragment"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -39,9 +39,23 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="30dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:src="@drawable/baseline_arrow_back_ios_24"
                 android:id="@+id/ivBack"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignBaseline="@id/ivBack"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:text="Logout"
+                android:drawableEnd="@drawable/common_full_open_on_phone"
+                android:id="@+id/btnLogout"/>
+
+
 
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
