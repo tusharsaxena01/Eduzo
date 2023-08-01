@@ -145,6 +145,9 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
                 "Abhi Saxena",
                 "Leader"
         );
+
+        // Todo: Change dp url
+
         AboutUsData aboutUsData2 = new AboutUsData(
                 Uri.parse("https://lh3.googleusercontent.com/a/AAcHTtdTC63X7-JvUxhgGEMLOulgHZDFJaqin4uItJyVK14QGw=s288-c-no"),
                 "Tanmay Singh",
@@ -152,7 +155,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         );
         AboutUsData aboutUsData3 = new AboutUsData(
                 Uri.parse("https://lh3.googleusercontent.com/a/AAcHTtdTC63X7-JvUxhgGEMLOulgHZDFJaqin4uItJyVK14QGw=s288-c-no"),
-                "Shresth Yadav",
+                "Shresth Prakash Yadav",
                 "Member"
         );
         aboutUsData.add(aboutUsData1);

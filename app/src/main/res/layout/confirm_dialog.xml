@@ -5,7 +5,7 @@
         android:layout_height="match_parent"
         android:id="@+id/cardMain">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,10 +25,12 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,13 +39,12 @@
                 android:layout_gravity="start|center"
                 android:background="@drawable/login_button_bk"
                 android:backgroundTint="#00FFA6"
-                android:layout_marginVertical="10dp"
 
                 />
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     />
                 <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="wrap_content"
@@ -54,7 +55,6 @@
                 android:background="@drawable/login_button_bk"
                 android:backgroundTint="#FF003B"
                 android:textColor="@color/whiteTextColor"
-                android:layout_marginVertical="10dp"
                 />
             </LinearLayout>
         </LinearLayout>
