@@ -12,9 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitAndroid.eduzo.activities.WelcomeActivity;
+import com.bitAndroid.eduzo.databinding.ConfirmDialogBinding;
+import com.bitAndroid.eduzo.databinding.ErrorDialogBinding;
 import com.bitAndroid.eduzo.databinding.NavigationRecyclerLayoutBinding;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,17 +64,62 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
 
     private void checkItemName(NavigationRecyclerData item) {
         switch(item.itemText){
+            case "Submit Quiz":
+                Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
+                // Todo: Add working here
+
+                break;
+            case "Results":
+                Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
+                // Todo: Add working here
+
+                break;
+            case "About Us":
+                Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
+                // Todo: Add working here
+
+                break;
+            case "Settings":
+                Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
+                // Todo: Add working here
+
+                break;
 
             case "Logout":
                 Toast.makeText(context, item.itemText+" Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Move to a function
-                FirebaseAuth.getInstance().signOut();
-                Intent welcomeIntent = new Intent(context, WelcomeActivity.class);
-                context.startActivity(welcomeIntent);
+                showConfirmDialog();
                 break;
             default:
                 break;
         }
+    }
+
+    private void showConfirmDialog() {
+        AlertDialog dialog;
+        ConfirmDialogBinding confirmDialogBinding = ConfirmDialogBinding.inflate(LayoutInflater.from(context), null, false);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(confirmDialogBinding.getRoot());
+        dialog = builder.create();
+        confirmDialogBinding.btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        confirmDialogBinding.btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent welcomeIntent = new Intent(context, WelcomeActivity.class);
+                context.startActivity(welcomeIntent);
+            }
+        });
+
+        dialog.show();
+        confirmDialogBinding.cardMain.setBackgroundResource(transparent);
+        dialog.getWindow().setBackgroundDrawableResource(transparent);
     }
 
 
