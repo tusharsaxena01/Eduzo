@@ -81,7 +81,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     }
 
-    private void showErrorDialog() {
+    public void showErrorDialog() {
         ErrorDialogBinding errorDialogBinding = ErrorDialogBinding.inflate(getLayoutInflater());
         errorDialogBinding.btnOkay.setOnClickListener(new View.OnClickListener() {
             @Override

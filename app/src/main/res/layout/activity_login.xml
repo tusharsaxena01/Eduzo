@@ -115,7 +115,8 @@
                                 android:inputType="textPassword"
                                 android:drawableStart="@android:drawable/ic_lock_lock"
                                 android:drawableTint="@color/black"
-                                android:drawablePadding="10dp"/>
+                                android:drawablePadding="10dp"
+                                />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <TextView

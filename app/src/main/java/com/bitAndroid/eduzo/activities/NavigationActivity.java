@@ -34,21 +34,21 @@ public class NavigationActivity extends AppCompatActivity {
         String uuid = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
         Log.w("uid", uuid);
 
-        firebaseDatabase.getReference().child("Registered Users")
-                        .child(uuid)
-                                .addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        UserData data = snapshot.getValue(UserData.class);
-                                        // Todo: set recycler view adapter based on roles
-
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
+//        firebaseDatabase.getReference().child("Registered Users")
+//                        .child(uuid)
+//                                .addValueEventListener(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                        UserData data = snapshot.getValue(UserData.class);
+//                                        // Todo: set recycler view adapter based on roles
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                    }
+//                                });
 
 
         // Setting fragment container to change
