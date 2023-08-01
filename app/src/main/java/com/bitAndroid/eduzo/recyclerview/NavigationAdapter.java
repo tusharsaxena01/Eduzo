@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bitAndroid.eduzo.activities.QuizActivity;
 import com.bitAndroid.eduzo.activities.WelcomeActivity;
 import com.bitAndroid.eduzo.databinding.BottomSheetLayoutBinding;
 import com.bitAndroid.eduzo.databinding.ConfirmDialogBinding;
@@ -73,7 +74,9 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
             case "Start Quiz":
                 Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Add working here
-
+                Intent quizIntent = new Intent(context, QuizActivity.class);
+                quizIntent.putExtra("Item Name", item.itemText);
+                context.startActivity(quizIntent);
                 break;
             case "Submit Quiz":
                 Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
