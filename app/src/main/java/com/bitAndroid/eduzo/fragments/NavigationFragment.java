@@ -52,9 +52,16 @@ public class NavigationFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 UserData data = snapshot.getValue(UserData.class);
-                                binding.tvName.setText(String.format("Name: %s", Objects.requireNonNull(data).getName()));
-                                binding.tvEmail.setText(String.format("Email: %s", Objects.requireNonNull(data).getEmail()));
-                                binding.tvRole.setText(String.format("Role: %s", Objects.requireNonNull(data).getRole()));
+                                try{
+                                    binding.tvName.setText(String.format("Name: %s", Objects.requireNonNull(data).getName()));
+                                    binding.tvEmail.setText(String.format("Email: %s", Objects.requireNonNull(data).getEmail()));
+                                    binding.tvRole.setText(String.format("Role: %s", Objects.requireNonNull(data).getRole()));
+                                }catch(NullPointerException e){
+                                    binding.tvName.setText("Error");
+                                    binding.tvEmail.setText("Error");
+                                    binding.tvRole.setText("Error");
+                                    showErrorDialog();
+                                }
                                 setRecyclerView(data.getRole());
                                 binding.pbLoading.setVisibility(View.GONE);
                             }

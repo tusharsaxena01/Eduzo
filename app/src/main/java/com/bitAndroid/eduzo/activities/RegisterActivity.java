@@ -142,7 +142,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void saveUser(String name, String mobileNo, String email, String password) {
+    public void saveUser(String name, String mobileNo, String email, String password) {
 
         String uuid = firebaseAuth.getUid();
         String role = "Student";

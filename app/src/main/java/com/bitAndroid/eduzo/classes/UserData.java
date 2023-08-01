@@ -9,8 +9,23 @@ public class UserData {
     String password;
     String role;
 
+    // No argument constructor
     public UserData() {
     }
+
+    // 3 argument constructor
+    // save user from google
+
+    public UserData(String uuid, String name, String mobileNo, String email, String role) {
+        this.uuid = uuid;
+        this.name = name;
+        this.mobileNo = mobileNo;
+        this.email = email;
+        this.role = role;
+    }
+
+
+    // all parameter constructor
 
     public UserData(String uuid, String name, String mobileNo, String email, String password, String role) {
         this.uuid = uuid;

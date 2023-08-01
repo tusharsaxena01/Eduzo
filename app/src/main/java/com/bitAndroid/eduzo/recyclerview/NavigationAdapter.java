@@ -61,6 +61,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
 
     private void checkItemName(NavigationRecyclerData item) {
         switch(item.itemText){
+
             case "Logout":
                 Toast.makeText(context, item.itemText+" Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Move to a function

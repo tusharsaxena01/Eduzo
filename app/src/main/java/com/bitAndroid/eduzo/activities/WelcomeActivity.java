@@ -1,7 +1,10 @@
 package com.bitAndroid.eduzo.activities;
 
+import static android.R.color.transparent;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,7 +14,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bitAndroid.eduzo.R;
+import com.bitAndroid.eduzo.classes.UserData;
 import com.bitAndroid.eduzo.databinding.ActivityWelcomeBinding;
+import com.bitAndroid.eduzo.databinding.ErrorDialogBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -24,6 +29,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class WelcomeActivity extends AppCompatActivity {
     ActivityWelcomeBinding binding;
@@ -76,8 +82,8 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Todo: add login with email
 //                Intent loginActivityIntent = new Intent(WelcomeActivity.this, LoginActivity.class);
-                Intent registerActivityIntent = new Intent(WelcomeActivity.this, RegisterActivity.class);
-                startActivity(registerActivityIntent);
+                Intent registerIntent = new Intent(WelcomeActivity.this, RegisterActivity.class);
+                startActivity(registerIntent);
             }
         });
 
@@ -105,8 +111,18 @@ public class WelcomeActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    // Todo: create next Activity in place of 'LoginActivity' in below code (call 1)
-                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    // Todo: create next Activity in place of 'LoginActivity' in below code (call 1) -- done
+                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                    assert user != null;
+                                    String uuid = user.getUid();
+                                    String name = user.getDisplayName();
+                                    String email = user.getEmail();
+                                    String mobileNo = user.getPhoneNumber();
+                                    // default role for google users
+                                    String role = "Student";
+                                    UserData googleUser = new UserData(uuid, name, mobileNo, email, role);
+                                    saveUser(googleUser);
+                                    Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
                                     startActivity(intent);
                                 } else {
                                     Toast.makeText(WelcomeActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -114,13 +130,28 @@ public class WelcomeActivity extends AppCompatActivity {
                             }
                         });
             } catch (ApiException e) {
-                throw new RuntimeException(e);
-            } catch (RuntimeException e){
-                // Todo: error dialog
-                // showErrorDialog();
+//                throw new RuntimeException(e);
+                showErrorDialog();
             }
         }
 
+    }
+
+    public void showErrorDialog() {
+        ErrorDialogBinding errorDialogBinding = ErrorDialogBinding.inflate(getLayoutInflater());
+        AlertDialog dialog;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(errorDialogBinding.getRoot());
+        dialog = builder.create();
+        errorDialogBinding.btnOkay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        errorDialogBinding.cardMain.setBackgroundResource(transparent);
+        dialog.getWindow().setBackgroundDrawableResource(transparent);
     }
 
     @Override
@@ -128,9 +159,41 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
-            // Todo: create next Activity in place of 'LoginActivity' in below code (call 2)
-            Intent intent = new Intent(this, LoginActivity.class);
+            // Todo: create next Activity in place of 'LoginActivity' in below code (call 2) -- done
+
+            Intent intent = new Intent(this, NavigationActivity.class);
             startActivity(intent);
+        }
+    }
+
+    private void saveUser(UserData data) {
+
+        try{
+            String uuid = firebaseAuth.getUid();
+            String role = "Student";
+
+            binding.pbLoading.setVisibility(View.VISIBLE);
+
+            assert uuid != null;
+            FirebaseDatabase.getInstance()
+                    .getReference()
+                    .child("Registered Users")
+                    .child(uuid)
+                    .setValue(data)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(WelcomeActivity.this, "User Saved Successfully", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(WelcomeActivity.this, "User Not Saved " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                showErrorDialog();
+                            }
+                            binding.pbLoading.setVisibility(View.GONE);
+                        }
+                    });
+        } catch (NullPointerException e) {
+            showErrorDialog();
         }
     }
 }
