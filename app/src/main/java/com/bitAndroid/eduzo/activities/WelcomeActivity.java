@@ -125,7 +125,12 @@ public class WelcomeActivity extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
                                     startActivity(intent);
                                 } else {
-                                    Toast.makeText(WelcomeActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    try{
+                                        Toast.makeText(WelcomeActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        showErrorDialog(task.getException().getMessage());
+                                    }catch (NullPointerException e){
+                                        showErrorDialog();
+                                    }
                                 }
                             }
                         });
@@ -153,6 +158,28 @@ public class WelcomeActivity extends AppCompatActivity {
         errorDialogBinding.cardMain.setBackgroundResource(transparent);
         dialog.getWindow().setBackgroundDrawableResource(transparent);
     }
+
+    public void showErrorDialog(String message) {
+        ErrorDialogBinding errorDialogBinding = ErrorDialogBinding.inflate(getLayoutInflater());
+
+        // change layout elements
+        errorDialogBinding.tvMessage.setText(message);
+
+        AlertDialog dialog;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(errorDialogBinding.getRoot());
+        dialog = builder.create();
+        errorDialogBinding.btnOkay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        errorDialogBinding.cardMain.setBackgroundResource(transparent);
+        dialog.getWindow().setBackgroundDrawableResource(transparent);
+    }
+
 
     @Override
     protected void onStart() {
