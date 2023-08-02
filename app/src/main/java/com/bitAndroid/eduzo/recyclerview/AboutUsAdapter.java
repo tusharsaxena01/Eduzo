@@ -30,7 +30,7 @@ public class AboutUsAdapter extends RecyclerView.Adapter<AboutUsAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        AboutUsRecycleLayoutBinding binding = AboutUsRecycleLayoutBinding.inflate(LayoutInflater.from(context), null, false);
+        AboutUsRecycleLayoutBinding binding = AboutUsRecycleLayoutBinding.inflate(LayoutInflater.from(context), parent, false);
         return new ViewHolder(binding);
     }
 
@@ -39,9 +39,9 @@ public class AboutUsAdapter extends RecyclerView.Adapter<AboutUsAdapter.ViewHold
         AboutUsData item = object.get(position);
         holder.binding.tvName.setText(item.getName());
         holder.binding.tvRole.setText(item.getRole());
-        Glide.with(context)
-                .load(item.getImgUrl())
-                .into(holder.binding.ivDp);
+//        Glide.with(context)
+//                .load(item.getImgUrl())
+//                .into(holder.binding.ivDp);
 
         // Todo: Add transparent background
         holder.binding.cvMain.setBackgroundResource(transparent);

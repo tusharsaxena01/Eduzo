@@ -1,6 +1,7 @@
 package com.bitAndroid.eduzo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 
 import com.bitAndroid.eduzo.R;
 import com.bitAndroid.eduzo.databinding.ActivityQuizBinding;
+import com.bitAndroid.eduzo.fragments.ResultFragment;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -26,5 +28,13 @@ public class QuizActivity extends AppCompatActivity {
                 startActivity(navigationIntent);
             }
         });
+
+        // Setting fragment container to change
+        ResultFragment resultFragment = new ResultFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragContainer, resultFragment)
+                .commit();
+
     }
 }
