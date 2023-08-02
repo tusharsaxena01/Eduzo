@@ -3,6 +3,7 @@ package com.bitAndroid.eduzo.recyclerview;
 import android.net.Uri;
 
 public class AboutUsData {
+    int dp;
 
     Uri imgUrl;
     String name;
@@ -20,6 +21,20 @@ public class AboutUsData {
         this.imgUrl = imgUrl;
         this.name = name;
         this.role = role;
+    }
+
+    public AboutUsData(int dp, String name, String role) {
+        this.dp = dp;
+        this.name = name;
+        this.role = role;
+    }
+
+    public int getDp() {
+        return dp;
+    }
+
+    public void setDp(int dp) {
+        this.dp = dp;
     }
 
     public Uri getImgUrl() {

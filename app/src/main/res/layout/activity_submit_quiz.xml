@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.QuizActivity"
+        tools:context=".activities.SubmitQuizActivity"
         android:background="#00a5ff">
 
         <ProgressBar
@@ -21,23 +21,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvHeaderText"
-            app:layout_constraintBottom_toTopOf="@id/rvResults"
-            android:text="Quiz"
+            app:layout_constraintBottom_toTopOf="@id/tvQuesLabel"
+            android:text="Submit Quiz"
             android:textSize="32sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"
             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="50dp"
+            app:layout_constraintTop_toBottomOf="@id/tvHeaderText"
+            app:layout_constraintBottom_toTopOf="@id/spinner"
+            android:id="@+id/tvQuesLabel"
+            android:text="Questions"
+            />
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/rvResults"
+            app:layout_constraintTop_toBottomOf="@id/tvQuesLabel"
+            android:entries="@array/spinner_items"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/rvResults"
-            app:layout_constraintTop_toTopOf="@id/tvHeaderText"
+            app:layout_constraintTop_toBottomOf="@id/spinner"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
             />
         <RelativeLayout
             android:layout_width="match_parent"

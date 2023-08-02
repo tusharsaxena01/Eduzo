@@ -18,7 +18,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bitAndroid.eduzo.R;
+import com.bitAndroid.eduzo.activities.HistoryActivity;
 import com.bitAndroid.eduzo.activities.QuizActivity;
+import com.bitAndroid.eduzo.activities.ResultsActivity;
+import com.bitAndroid.eduzo.activities.SubmitQuizActivity;
 import com.bitAndroid.eduzo.activities.WelcomeActivity;
 import com.bitAndroid.eduzo.databinding.BottomSheetLayoutBinding;
 import com.bitAndroid.eduzo.databinding.ConfirmDialogBinding;
@@ -75,23 +79,25 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
                 Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Add working here
                 Intent quizIntent = new Intent(context, QuizActivity.class);
-                quizIntent.putExtra("Item Name", item.itemText);
                 context.startActivity(quizIntent);
                 break;
             case "Submit Quiz":
                 Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Add working here
-
+                Intent submitQuizIntent = new Intent(context, SubmitQuizActivity.class);
+                context.startActivity(submitQuizIntent);
                 break;
             case "Results":
                 Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Add working here
-
+                Intent resultIntent = new Intent(context, ResultsActivity.class);
+                context.startActivity(resultIntent);
                 break;
             case "History":
                 Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Add working here
-
+                Intent historyIntent = new Intent(context, HistoryActivity.class);
+                context.startActivity(historyIntent);
                 break;
             case "About Us":
                 Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
@@ -144,7 +150,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
     private void setRecyclerView() {
         ArrayList<AboutUsData> aboutUsData = new ArrayList<>();
         AboutUsData aboutUsData1 = new AboutUsData(
-                Uri.parse("https://lh3.googleusercontent.com/a/AAcHTtdTC63X7-JvUxhgGEMLOulgHZDFJaqin4uItJyVK14QGw=s288-c-no"),
+                R.drawable.creator,
                 "Abhi Saxena",
                 "Leader"
         );
@@ -152,12 +158,12 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         // Todo: Change dp url
 
         AboutUsData aboutUsData2 = new AboutUsData(
-                Uri.parse("https://lh3.googleusercontent.com/a/AAcHTtdTC63X7-JvUxhgGEMLOulgHZDFJaqin4uItJyVK14QGw=s288-c-no"),
+                R.drawable.creator,
                 "Tanmay Singh",
                 "Member"
         );
         AboutUsData aboutUsData3 = new AboutUsData(
-                Uri.parse("https://lh3.googleusercontent.com/a/AAcHTtdTC63X7-JvUxhgGEMLOulgHZDFJaqin4uItJyVK14QGw=s288-c-no"),
+                R.drawable.creator,
                 "Shresth Prakash Yadav",
                 "Member"
         );
