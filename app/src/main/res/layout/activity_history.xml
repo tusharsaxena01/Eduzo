@@ -71,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/bg_transparent"
-                    android:layout_marginHorizontal="40dp"
+                    android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="5dp"
                     android:layout_alignParentBottom="true"
                     android:layout_below="@id/llHeader"

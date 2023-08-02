@@ -9,8 +9,11 @@ public class HistoryData {
     public HistoryData() {
     }
 
-    public HistoryData(String testName) {
+    public HistoryData(String testName, String date, String score, String totalQues) {
         this.testName = testName;
+        this.date = date;
+        this.score = score;
+        this.totalQues = totalQues;
     }
 
     public HistoryData(String date, String score, String totalQues) {

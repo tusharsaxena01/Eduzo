@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.bitAndroid.eduzo.R;
@@ -46,7 +47,9 @@ public class HistoryActivity extends AppCompatActivity {
 
         long totalTestCount = getTotalTestCount();
         historyData = getResults(totalTestCount);
-
+        // -- sample data
+        historyData.add(new HistoryData("hardcoded test","28-02-23", "2","2"));
+        // -- end
         HistoryAdapter adapter = new HistoryAdapter(this, historyData);
 
         binding.rvResults.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -64,6 +67,7 @@ public class HistoryActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         testCount[0] = snapshot.getChildrenCount();
+                        Log.e("children", ""+snapshot.getChildrenCount());
                     }
 
                     @Override
