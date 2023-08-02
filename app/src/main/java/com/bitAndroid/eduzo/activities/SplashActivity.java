@@ -25,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
         Intent mainActivity = new Intent(SplashActivity.this, MainActivity.class);
         Intent welcomeActivity = new Intent(SplashActivity.this, WelcomeActivity.class);
         Intent navigationActivity = new Intent(SplashActivity.this, NavigationActivity.class);
-        FirebaseAuth.getInstance().signOut();
+//        FirebaseAuth.getInstance().signOut();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -34,8 +34,12 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(mainActivity);
                     Log.e("Activity", "main activity");
                 }else{
-                    Log.e("Activity", "welcome activity");
-                    startActivity(welcomeActivity);
+                    if(FirebaseAuth.getInstance().getCurrentUser() == null){
+                        Log.e("Activity", "welcome activity");
+                        startActivity(welcomeActivity);
+                    }else{
+                        startActivity(navigationActivity);
+                    }
                 }
                 finish();
             }
