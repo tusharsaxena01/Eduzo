@@ -43,10 +43,8 @@ public class HistoryActivity extends AppCompatActivity {
             }
         });
 
-        ArrayList<HistoryData> historyData = new ArrayList<>();
-
         long totalTestCount = getTotalTestCount();
-        historyData = getResults(totalTestCount);
+        ArrayList<HistoryData> historyData = getResults(totalTestCount);
         // -- sample data
         historyData.add(new HistoryData("hardcoded test","28-02-23", "2","2"));
         // -- end
