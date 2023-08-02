@@ -93,6 +93,7 @@
                                 android:inputType="textEmailAddress"
                                 android:maxLines="1"
                                 android:hint="@string/login_email_hint"
+                                android:text="bit21csl07@bit.ac.in"
                                 android:drawableStart="@android:drawable/sym_action_email"
                                 android:drawableTint="@color/black"
                                 android:drawablePadding="10dp"/>
@@ -111,6 +112,8 @@
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/textfields_register_login"
                                 android:hint="@string/login_password_hint"
+                                android:maxLength="16"
+                                android:text="1234567890"
                                 android:maxLines="1"
                                 android:inputType="textPassword"
                                 android:drawableStart="@android:drawable/ic_lock_lock"

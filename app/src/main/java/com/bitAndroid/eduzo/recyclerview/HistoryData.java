@@ -3,20 +3,20 @@ package com.bitAndroid.eduzo.recyclerview;
 public class HistoryData {
     String testName;
     String date;
-    String score;
-    String totalQues;
+    int score;
+    int totalQues;
 
     public HistoryData() {
     }
 
-    public HistoryData(String testName, String date, String score, String totalQues) {
+    public HistoryData(String testName, String date, int score, int totalQues) {
         this.testName = testName;
         this.date = date;
         this.score = score;
         this.totalQues = totalQues;
     }
 
-    public HistoryData(String date, String score, String totalQues) {
+    public HistoryData(String date, int score, int totalQues) {
         this.date = date;
         this.score = score;
         this.totalQues = totalQues;
@@ -38,19 +38,19 @@ public class HistoryData {
         this.date = date;
     }
 
-    public String getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
-    public String getTotalQues() {
+    public int getTotalQues() {
         return totalQues;
     }
 
-    public void setTotalQues(String totalQues) {
+    public void setTotalQues(int totalQues) {
         this.totalQues = totalQues;
     }
 }

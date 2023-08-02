@@ -4,8 +4,9 @@ public class ResultData {
 
     String testName;
     String date;
-    int totalQues;
     int score;
+    int totalQues;
+
 
     public ResultData() {
     }

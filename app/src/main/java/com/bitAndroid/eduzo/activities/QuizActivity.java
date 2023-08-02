@@ -29,12 +29,6 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        // Setting fragment container to change
-        ResultFragment resultFragment = new ResultFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.fragContainer, resultFragment)
-                .commit();
 
     }
 }

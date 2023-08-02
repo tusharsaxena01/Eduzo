@@ -22,6 +22,7 @@ import com.bitAndroid.eduzo.R;
 import com.bitAndroid.eduzo.activities.HistoryActivity;
 import com.bitAndroid.eduzo.activities.QuizActivity;
 import com.bitAndroid.eduzo.activities.ResultsActivity;
+import com.bitAndroid.eduzo.activities.SubmitQuizActivity;
 import com.bitAndroid.eduzo.activities.WelcomeActivity;
 import com.bitAndroid.eduzo.databinding.BottomSheetLayoutBinding;
 import com.bitAndroid.eduzo.databinding.ConfirmDialogBinding;
@@ -78,13 +79,13 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
                 Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Add working here
                 Intent quizIntent = new Intent(context, QuizActivity.class);
-                quizIntent.putExtra("Item Name", item.itemText);
                 context.startActivity(quizIntent);
                 break;
             case "Submit Quiz":
                 Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Add working here
-
+                Intent submitQuizIntent = new Intent(context, SubmitQuizActivity.class);
+                context.startActivity(submitQuizIntent);
                 break;
             case "Results":
                 Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();

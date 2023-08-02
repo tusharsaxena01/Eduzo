@@ -43,29 +43,41 @@ public class HistoryActivity extends AppCompatActivity {
             }
         });
 
-        long totalTestCount = getTotalTestCount();
-        ArrayList<HistoryData> historyData = getResults(totalTestCount);
-        // -- sample data
-        historyData.add(new HistoryData("hardcoded test","28-02-23", "2","2"));
-        // -- end
-        HistoryAdapter adapter = new HistoryAdapter(this, historyData);
+//        long totalTestCount = getTotalTestCount();
 
-        binding.rvResults.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
-        binding.rvResults.setAdapter(adapter);
+        setData();
+//        ArrayList<HistoryData> historyData = setData();
+//        // -- sample data
+//        historyData.add(new HistoryData("hardcoded test","28-02-23", "2","2"));
+//        // -- end
+//        HistoryAdapter adapter = new HistoryAdapter(this, historyData);
+//
+//        binding.rvResults.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+//
+//        binding.rvResults.setAdapter(adapter);
 
     }
 
 
-    private long getTotalTestCount() {
-        final long[] testCount = new long[1];
+    private void setData() {
         firebaseDatabase.getReference()
-                .child("Results")
+                .child("Results").child(firebaseAuth.getCurrentUser().getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        testCount[0] = snapshot.getChildrenCount();
+//                        testCount[0] = snapshot.getChildrenCount();
                         Log.e("children", ""+snapshot.getChildrenCount());
+                        ArrayList<HistoryData> historyData = new ArrayList<>();
+                        for (DataSnapshot child : snapshot.getChildren()) {
+                            HistoryData value = child.getValue(HistoryData.class);
+                            value.setTestName(child.getKey());
+                            historyData.add(value);
+                        }
+                        HistoryAdapter adapter = new HistoryAdapter(HistoryActivity.this, historyData);
+
+                        binding.rvResults.setLayoutManager(new LinearLayoutManager(HistoryActivity.this, LinearLayoutManager.VERTICAL, false));
+
+                        binding.rvResults.setAdapter(adapter);
                     }
 
                     @Override
@@ -73,34 +85,6 @@ public class HistoryActivity extends AppCompatActivity {
                         new WelcomeActivity().showErrorDialog(error.getMessage());
                     }
                 });
-        return testCount[0];
-    }
-    private ArrayList<HistoryData> getResults(long totalTestCount) {
-        ArrayList<HistoryData> historyData = new ArrayList<>();
-        for (int i = 1; i <= totalTestCount; i++) {
-            try{
-                firebaseDatabase.getReference()
-                        .child("Results")
-                        .child(String.valueOf(i))
-                        .child(firebaseAuth.getCurrentUser().getUid())
-                        .addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                HistoryData item = snapshot.getValue(HistoryData.class);
-                                historyData.add(item);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                throw new RuntimeException();
-                            }
-                        });
-            }catch(RuntimeException e){
-                continue;
-            }
-        }
-
-        return historyData;
     }
 
 }

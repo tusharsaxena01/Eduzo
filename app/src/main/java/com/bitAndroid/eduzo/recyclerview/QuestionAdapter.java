@@ -12,17 +12,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitAndroid.eduzo.databinding.BottomSheetLayoutBinding;
-import com.bitAndroid.eduzo.databinding.HistoryRecyclerLayoutBinding;
+import com.bitAndroid.eduzo.databinding.QuestionRecyclerLayoutBinding;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
+public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
     Context context;
-    ArrayList<HistoryData> object;
+    ArrayList<QuestionData> object;
 
-    public HistoryAdapter(Context context, ArrayList<HistoryData> objectData) {
+    public QuestionAdapter(Context context, ArrayList<QuestionData> objectData) {
         this.context = context;
         this.object = objectData;
     }
@@ -30,19 +30,17 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        HistoryRecyclerLayoutBinding binding = HistoryRecyclerLayoutBinding.inflate(LayoutInflater.from(context), parent, false);
+        QuestionRecyclerLayoutBinding binding = QuestionRecyclerLayoutBinding.inflate(LayoutInflater.from(context), parent, false);
         return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        HistoryData item = object.get(position);
+//        QuestionData item = object.get(position);
 
-        holder.binding.tvTestName.setText("Test "+item.getTestName());
-        holder.binding.tvDate.setText(item.getDate());
-        holder.binding.tvScore.setText(""+item.getScore());
+        // layout changes here
 
-        holder.binding.cvMain.setBackgroundResource(transparent);
+//        holder.binding.cvMain.setBackgroundResource(transparent);
     }
 
 
@@ -52,8 +50,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        HistoryRecyclerLayoutBinding binding;
-        public ViewHolder(@NonNull HistoryRecyclerLayoutBinding binding) {
+        QuestionRecyclerLayoutBinding binding;
+        public ViewHolder(@NonNull QuestionRecyclerLayoutBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
 
