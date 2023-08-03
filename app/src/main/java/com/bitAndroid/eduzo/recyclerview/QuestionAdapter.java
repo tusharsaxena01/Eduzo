@@ -43,7 +43,9 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         holder.binding.etAnswer.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                setQuestions(holder, object.get(object.indexOf(item)));
                 setErrorOnEmpty(holder, item);
+                // item.setAnswer(s.toString());
             }
 
             @Override
@@ -53,7 +55,104 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
             @Override
             public void afterTextChanged(Editable s) {
-                setQuestions(holder, object.get(holder.getAdapterPosition()));
+                setQuestions(holder, object.get(object.indexOf(item)));
+            }
+        });
+
+        holder.binding.etQuestion.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+                item.setQuestion(s.toString());
+
+                object.set(object.indexOf(item), item);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                item.setQuestion(charSequence.toString());
+                object.set(object.indexOf(item), item);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        holder.binding.etOption1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+                item.setOption1(s.toString());
+
+                object.set(object.indexOf(item), item);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                item.setOption1(charSequence.toString());
+                object.set(object.indexOf(item), item);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        holder.binding.etOption2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+                item.setOption2(s.toString());
+
+                object.set(object.indexOf(item), item);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                item.setOption2(charSequence.toString());
+                object.set(object.indexOf(item), item);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        holder.binding.etOption3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+                item.setOption3(s.toString());
+
+                object.set(object.indexOf(item), item);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                item.setOption3(charSequence.toString());
+                object.set(object.indexOf(item), item);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        holder.binding.etOption4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+                item.setOption4(s.toString());
+
+                object.set(object.indexOf(item), item);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                item.setOption4(charSequence.toString());
+                object.set(object.indexOf(item), item);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 
@@ -77,15 +176,15 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
 
     private void setErrorOnEmpty(@NonNull ViewHolder holder, QuestionData item) {
-        if(item.getQuestion().isEmpty()){
+        if(item.getQuestion()== null || item.getQuestion().isEmpty()){
             holder.binding.etQuestion.setError("Empty");
-        }if(item.getOption1().isEmpty()){
+        }if(item.getOption1()== null || item.getOption1().isEmpty()){
             holder.binding.etQuestion.setError("Empty");
-        }if(item.getOption2().isEmpty()){
+        }if(item.getOption2()== null || item.getOption2().isEmpty()){
             holder.binding.etQuestion.setError("Empty");
-        }if(item.getOption3().isEmpty()){
+        }if(item.getOption3()== null || item.getOption3().isEmpty()){
             holder.binding.etQuestion.setError("Empty");
-        }if(item.getOption4().isEmpty()){
+        }if(item.getOption4()== null || item.getOption4().isEmpty()){
             holder.binding.etQuestion.setError("Empty");
         }
     }
