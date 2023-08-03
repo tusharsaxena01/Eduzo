@@ -1,5 +1,6 @@
 package com.bitAndroid.eduzo.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -15,12 +16,16 @@ import com.bitAndroid.eduzo.R;
 import com.bitAndroid.eduzo.databinding.ActivitySubmitQuizBinding;
 import com.bitAndroid.eduzo.recyclerview.QuestionAdapter;
 import com.bitAndroid.eduzo.recyclerview.QuestionData;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 public class SubmitQuizActivity extends AppCompatActivity {
 
     ActivitySubmitQuizBinding binding;
+    ArrayList<QuestionData> questions = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +49,13 @@ public class SubmitQuizActivity extends AppCompatActivity {
         binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                binding.pbLoading.setVisibility(View.VISIBLE);
                 int noOfQues = Integer.parseInt(parent.getItemAtPosition(position).toString());
                 ArrayList<QuestionData> questionData = new ArrayList<>();
                 for (int i = 0; i < noOfQues; i++) {
+                    binding.pbLoading.setVisibility(View.VISIBLE);
                     questionData.add(new QuestionData());
+                    questions.add(new QuestionData());                    binding.pbLoading.setVisibility(View.VISIBLE);
+                    binding.pbLoading.setVisibility(View.GONE);
                 }
                 QuestionAdapter questionAdapter = new QuestionAdapter(SubmitQuizActivity.this, questionData);
                 binding.rvResults.setLayoutManager(new LinearLayoutManager(SubmitQuizActivity.this, LinearLayoutManager.VERTICAL, false));
@@ -64,5 +71,62 @@ public class SubmitQuizActivity extends AppCompatActivity {
             }
         });
 
+        binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.pbLoading.setVisibility(View.VISIBLE);
+                validateQuestions();
+                binding.pbLoading.setVisibility(View.GONE);
+            }
+        });
+
     }
+
+    private void validateQuestions() {
+        //checking if all options and question is filled and not null
+        for (QuestionData question : questions) {
+            if(!checkIfEmpty(question)){
+                new WelcomeActivity().showErrorDialog("Error, Empty field Found");
+                return;
+            }
+        }
+
+        for (int i = 0; i < questions.size(); i++) {
+            saveQuestionToDatabase(questions.get(i), i);
+        }
+    }
+
+    private void saveQuestionToDatabase(QuestionData data, int i) {
+        FirebaseDatabase.getInstance()
+                .getReference()
+                .child("Questions")
+                .child(String.valueOf(i))
+                .setValue(data)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(SubmitQuizActivity.this, "Question "+i+" Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(SubmitQuizActivity.this, "Question "+i+" not submitted : "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private boolean checkIfEmpty(QuestionData question) {
+        if(question.getQuestion().equals(""))
+            return false;
+        if(question.getOption1().equals(""))
+            return false;
+        if(question.getOption2().equals(""))
+            return false;
+        if(question.getOption3().equals(""))
+            return false;
+        if(question.getOption4().equals(""))
+            return false;
+        return !question.getAnswer().equals("");
+    }
+
+
 }
