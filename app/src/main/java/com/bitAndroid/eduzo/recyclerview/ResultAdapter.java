@@ -27,7 +27,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ResultRecyclerLayoutBinding binding = ResultRecyclerLayoutBinding.inflate(LayoutInflater.from(context), null, false);
+        ResultRecyclerLayoutBinding binding = ResultRecyclerLayoutBinding.inflate(LayoutInflater.from(context), parent, false);
         return new ViewHolder(binding);
     }
 
@@ -36,8 +36,8 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         ResultData item = object.get(position);
         // Data manipulation
         int i=0;
-        holder.binding.tvName.setText("Test "+i++);
-        holder.binding.tvScore.setText(item.getScore());
+        holder.binding.tvName.setText(item.getTestName());
+        holder.binding.tvScore.setText(""+item.getScore());
         holder.binding.tvDate.setText(item.getDate());
 
         // Todo: Add transparent background

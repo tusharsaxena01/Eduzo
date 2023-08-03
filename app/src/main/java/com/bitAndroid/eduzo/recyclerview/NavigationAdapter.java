@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitAndroid.eduzo.R;
+import com.bitAndroid.eduzo.activities.EditProfileActivity;
 import com.bitAndroid.eduzo.activities.HistoryActivity;
 import com.bitAndroid.eduzo.activities.QuizActivity;
 import com.bitAndroid.eduzo.activities.ResultsActivity;
@@ -131,6 +132,14 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
                 v.canScrollVertically(0);
                 v.canScrollVertically(1);
                 return false;
+            }
+        });
+
+        settingsBottomSheetLayoutBinding.updateProfileOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editProfileIntent = new Intent(context, EditProfileActivity.class);
+                context.startActivity(editProfileIntent);
             }
         });
 
