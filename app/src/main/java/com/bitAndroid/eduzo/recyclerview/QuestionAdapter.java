@@ -2,19 +2,19 @@ package com.bitAndroid.eduzo.recyclerview;
 
 import static android.R.color.transparent;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bitAndroid.eduzo.databinding.BottomSheetLayoutBinding;
 import com.bitAndroid.eduzo.databinding.QuestionRecyclerLayoutBinding;
-import com.bumptech.glide.Glide;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
@@ -36,11 +36,58 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        QuestionData item = object.get(position);
+        QuestionData item = object.get(position);
 
         // layout changes here
 
+        holder.binding.etAnswer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                setErrorOnEmpty(holder, item);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Do nothing when text is changed
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                setQuestions(holder, object.get(holder.getAdapterPosition()));
+            }
+        });
+
 //        holder.binding.cvMain.setBackgroundResource(transparent);
+    }
+
+    private void setQuestions(@NonNull ViewHolder holder, QuestionData item) {
+        String ques = holder.binding.etQuestion.getText().toString();
+        String option1 = holder.binding.etOption1.getText().toString();
+        String option2 = holder.binding.etOption2.getText().toString();
+        String option3 = holder.binding.etOption3.getText().toString();
+        String option4 = holder.binding.etOption4.getText().toString();
+        String answer = holder.binding.etAnswer.getText().toString();
+        item.setQuestion(ques);
+        item.setOption1(option1);
+        item.setOption2(option2);
+        item.setOption3(option3);
+        item.setOption4(option4);
+        item.setAnswer(answer);
+    }
+
+
+    private void setErrorOnEmpty(@NonNull ViewHolder holder, QuestionData item) {
+        if(item.getQuestion().isEmpty()){
+            holder.binding.etQuestion.setError("Empty");
+        }if(item.getOption1().isEmpty()){
+            holder.binding.etQuestion.setError("Empty");
+        }if(item.getOption2().isEmpty()){
+            holder.binding.etQuestion.setError("Empty");
+        }if(item.getOption3().isEmpty()){
+            holder.binding.etQuestion.setError("Empty");
+        }if(item.getOption4().isEmpty()){
+            holder.binding.etQuestion.setError("Empty");
+        }
     }
 
 

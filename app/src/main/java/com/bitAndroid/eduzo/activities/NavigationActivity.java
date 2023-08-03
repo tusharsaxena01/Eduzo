@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 
 import com.bitAndroid.eduzo.classes.UserData;
 import com.bitAndroid.eduzo.fragments.NavigationFragment;
@@ -26,7 +27,7 @@ public class NavigationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityNavigationBinding.inflate(getLayoutInflater());
+        binding = ActivityNavigationBinding.inflate(LayoutInflater.from(NavigationActivity.this));
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         setContentView(binding.getRoot());

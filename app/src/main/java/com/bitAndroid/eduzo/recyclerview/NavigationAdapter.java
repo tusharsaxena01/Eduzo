@@ -3,7 +3,6 @@ package com.bitAndroid.eduzo.recyclerview;
 import static android.R.color.transparent;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 
@@ -19,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitAndroid.eduzo.R;
+import com.bitAndroid.eduzo.activities.EditProfileActivity;
 import com.bitAndroid.eduzo.activities.HistoryActivity;
 import com.bitAndroid.eduzo.activities.QuizActivity;
 import com.bitAndroid.eduzo.activities.ResultsActivity;
@@ -27,6 +27,7 @@ import com.bitAndroid.eduzo.activities.WelcomeActivity;
 import com.bitAndroid.eduzo.databinding.BottomSheetLayoutBinding;
 import com.bitAndroid.eduzo.databinding.ConfirmDialogBinding;
 import com.bitAndroid.eduzo.databinding.NavigationRecyclerLayoutBinding;
+import com.bitAndroid.eduzo.databinding.SettingsBottomSheetLayoutBinding;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
@@ -107,7 +108,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
             case "Settings":
                 Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Add working here
-
+                showSettingsBottomSheetDialog();
                 break;
 
             case "Logout":
@@ -118,6 +119,36 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
             default:
                 break;
         }
+    }
+
+    private void showSettingsBottomSheetDialog() {
+        SettingsBottomSheetLayoutBinding settingsBottomSheetLayoutBinding = SettingsBottomSheetLayoutBinding.inflate(LayoutInflater.from(context));
+        bottomSheetDialog = new BottomSheetDialog(context);
+        bottomSheetDialog.setContentView(settingsBottomSheetLayoutBinding.getRoot());
+
+        settingsBottomSheetLayoutBinding.bsBar.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View v, DragEvent event) {
+                v.canScrollVertically(0);
+                v.canScrollVertically(1);
+                return false;
+            }
+        });
+
+        settingsBottomSheetLayoutBinding.updateProfileOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editProfileIntent = new Intent(context, EditProfileActivity.class);
+                context.startActivity(editProfileIntent);
+            }
+        });
+
+        bottomSheetDialog.setCanceledOnTouchOutside(true);
+        bottomSheetDialog.setDismissWithAnimation(true);
+
+//        bottomSheetDialog.getWindow().setBackgroundDrawableResource(R.drawable.card_top_rounded);
+        bottomSheetDialog.getWindow().setBackgroundDrawableResource(transparent);
+        bottomSheetDialog.show();
     }
 
     private void showBottomSheetDialog() {
@@ -221,8 +252,6 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView ivItemImage;
-        TextView tvItemText;
         NavigationRecyclerLayoutBinding binding;
         public ViewHolder(@NonNull NavigationRecyclerLayoutBinding binding) {
             super(binding.getRoot());
