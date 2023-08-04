@@ -1,17 +1,24 @@
 package com.bitAndroid.eduzo.activities;
 
+import static android.R.color.transparent;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import com.bitAndroid.eduzo.classes.UserData;
+import com.bitAndroid.eduzo.databinding.ConfirmDialogBinding;
 import com.bitAndroid.eduzo.fragments.NavigationFragment;
 import com.bitAndroid.eduzo.R;
 import com.bitAndroid.eduzo.databinding.ActivityNavigationBinding;
+import com.bitAndroid.eduzo.recyclerview.NavigationAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,6 +47,13 @@ public class NavigationActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         setContentView(binding.getRoot());
 
+        binding.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showConfirmDialog();
+            }
+        });
+
         String uuid = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
         Log.w("uid", uuid);
 
@@ -67,5 +81,32 @@ public class NavigationActivity extends AppCompatActivity {
                 .commit();
 
     }
+    public void showConfirmDialog() {
+        AlertDialog dialog;
+        ConfirmDialogBinding confirmDialogBinding = ConfirmDialogBinding.inflate(LayoutInflater.from(NavigationActivity.this), null, false);
+        AlertDialog.Builder builder = new AlertDialog.Builder(NavigationActivity.this);
+        builder.setView(confirmDialogBinding.getRoot());
+        dialog = builder.create();
+        confirmDialogBinding.btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        confirmDialogBinding.btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent welcomeIntent = new Intent(NavigationActivity.this, WelcomeActivity.class);
+                startActivity(welcomeIntent);
+            }
+        });
+
+        dialog.show();
+        confirmDialogBinding.cardMain.setBackgroundResource(transparent);
+        dialog.getWindow().setBackgroundDrawableResource(transparent);
+    }
+
 
 }
