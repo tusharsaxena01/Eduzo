@@ -42,19 +42,7 @@ public class HistoryActivity extends AppCompatActivity {
                 startActivity(navigationIntent);
             }
         });
-
-//        long totalTestCount = getTotalTestCount();
-
         setData();
-//        ArrayList<HistoryData> historyData = setData();
-//        // -- sample data
-//        historyData.add(new HistoryData("hardcoded test","28-02-23", "2","2"));
-//        // -- end
-//        HistoryAdapter adapter = new HistoryAdapter(this, historyData);
-//
-//        binding.rvResults.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-//
-//        binding.rvResults.setAdapter(adapter);
 
     }
 

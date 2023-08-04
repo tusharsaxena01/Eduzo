@@ -11,21 +11,19 @@ import com.bitAndroid.eduzo.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding binding;
-    SharedPreferences sp;
+    private ActivityMainBinding binding;
+    private SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        sp = getSharedPreferences("data", 0);
-        binding.btnGetStarted.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
-                startActivity(intent);
-            }
-        });
 
+        sp = getSharedPreferences("data", MODE_PRIVATE);
+
+        binding.btnGetStarted.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
+        });
     }
 }

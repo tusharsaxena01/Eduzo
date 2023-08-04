@@ -13,37 +13,39 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity {
 
-    SharedPreferences sp;
+    private static final int SPLASH_DELAY_MS = 3000;
+    private static final String DATA_PREFS_NAME = "data";
+    private static final String FIRST_VISIT_KEY = "first_visit";
+
+    private SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-//        Log.e("Current User", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        sp = getSharedPreferences(DATA_PREFS_NAME, MODE_PRIVATE);
 
-        sp = getSharedPreferences("data", 0);
-        Intent mainActivity = new Intent(SplashActivity.this, MainActivity.class);
-        Intent welcomeActivity = new Intent(SplashActivity.this, WelcomeActivity.class);
-        Intent navigationActivity = new Intent(SplashActivity.this, NavigationActivity.class);
-//        FirebaseAuth.getInstance().signOut();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                int first_visit = sp.getInt("first_visit", 0);
-                if(first_visit == 0) {
-                    startActivity(mainActivity);
-                    Log.e("Activity", "main activity");
-                }else{
-                    if(FirebaseAuth.getInstance().getCurrentUser() == null){
-                        Log.e("Activity", "welcome activity");
-                        startActivity(welcomeActivity);
-                    }else{
-                        startActivity(navigationActivity);
-                    }
+        Intent mainActivityIntent = new Intent(SplashActivity.this, MainActivity.class);
+        Intent welcomeActivityIntent = new Intent(SplashActivity.this, WelcomeActivity.class);
+        Intent navigationActivityIntent = new Intent(SplashActivity.this, NavigationActivity.class);
+
+        new Handler().postDelayed(() -> {
+            int firstVisit = sp.getInt(FIRST_VISIT_KEY, 0);
+
+            if (firstVisit == 0) {
+                startActivity(mainActivityIntent);
+                Log.e("Activity", "main activity");
+            } else {
+                if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                    startActivity(welcomeActivityIntent);
+                    Log.e("Activity", "welcome activity");
+                } else {
+                    startActivity(navigationActivityIntent);
                 }
-                finish();
             }
-        }, 3000);
 
+            finish();
+        }, SPLASH_DELAY_MS);
     }
 }

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,10 +23,9 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
-    ActivityLoginBinding binding;
-    FirebaseAuth firebaseAuth;
-    FirebaseDatabase firebaseDatabase;
-
+    private ActivityLoginBinding binding;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase firebaseDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,108 +36,50 @@ public class LoginActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         // Navigation
-        binding.ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent welcomeIntent = new Intent(LoginActivity.this, WelcomeActivity.class);
-                startActivity(welcomeIntent);
-            }
+        binding.ivBack.setOnClickListener(v -> {
+            Intent welcomeIntent = new Intent(LoginActivity.this, WelcomeActivity.class);
+            startActivity(welcomeIntent);
         });
 
-        binding.tvRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(registerIntent);
-            }
+        binding.tvRegister.setOnClickListener(v -> {
+            Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(registerIntent);
         });
 
         //Login functionality
+        binding.btnLogin.setOnClickListener(v -> {
+            binding.pbLoading.setVisibility(View.VISIBLE);
+            String email = binding.etEmail.getText().toString().trim();
+            String password = binding.etPassword.getText().toString();
 
-        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = binding.etEmail.getText().toString().trim();
-                String password = binding.etPassword.getText().toString();
-                if(validate(email, password)){
-                    firebaseAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    binding.pbLoading.setVisibility(View.VISIBLE);
-                                    if(task.isSuccessful()){
-                                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                        @NonNull
-                                        String role = getRole(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
-                                        getSharedPreferences("data", 0).edit()
-                                                .putString("role", role)
-                                                .putInt("first_visit", 1)
-                                                .apply();
-                                        Intent navigationIntent = new Intent(LoginActivity.this, NavigationActivity.class);
-                                        startActivity(navigationIntent);
-                                    }else{
-                                        Toast.makeText(LoginActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                    binding.pbLoading.setVisibility(View.GONE);
-                                }
-                            });
-                }
+            if (validate(email, password)) {
+                firebaseAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(task -> {
+                            binding.pbLoading.setVisibility(View.GONE);
+                            if (task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                String role = getRole(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+                                getSharedPreferences("data", 0).edit()
+                                        .putString("role", role)
+                                        .putInt("first_visit", 1)
+                                        .apply();
+                                Intent navigationIntent = new Intent(LoginActivity.this, NavigationActivity.class);
+                                startActivity(navigationIntent);
+                            } else {
+                                Toast.makeText(LoginActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } else {
+                binding.pbLoading.setVisibility(View.GONE);
+                Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
             }
         });
 
         // Forgot Password
-        binding.tvForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent forgotPasswordIntent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-                startActivity(forgotPasswordIntent);
-            }
+        binding.tvForgotPassword.setOnClickListener(v -> {
+            Intent forgotPasswordIntent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+            startActivity(forgotPasswordIntent);
         });
-
-//
-//        String phoneNo = firebaseAuth.getCurrentUser().getPhoneNumber();
-//        String email = firebaseAuth.getCurrentUser().getEmail();
-//        binding.tvSignInName.setText("Signed in as "+
-//                firebaseAuth.getCurrentUser().getDisplayName()+
-//                "\n Phone No:"+phoneNo+
-//                "\n Email: "+email);
-//        // Todo: remove this code, this is temporary
-//
-//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//
-//        StrictMode.setThreadPolicy(policy);
-//
-//        // get display picture
-//
-////        Uri dp = firebaseAuth.getCurrentUser().getPhotoUrl();
-//
-//
-//        URL url = null;
-//        try {
-//            url = new URL(firebaseAuth.getCurrentUser().getPhotoUrl().toString());
-//        } catch (MalformedURLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        Bitmap bmp = null;
-//        try {
-//            bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        binding.ivDp.setImageBitmap(bmp);
-//
-////        binding.ivDp.setImageResource(url);
-//
-//        //logout button
-//        binding.btnLogOut.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                firebaseAuth.signOut();
-//                Intent intent= new Intent(LoginActivity.this, MainActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
     }
 
     private String getRole(String uuid) {
@@ -147,11 +87,11 @@ public class LoginActivity extends AppCompatActivity {
         firebaseDatabase.getReference()
                 .child("Registered Users")
                 .child(uuid)
-                .addValueEventListener(new ValueEventListener() {
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         UserData data = snapshot.getValue(UserData.class);
-                        if(data != null){
+                        if (data != null) {
                             role[0] = data.getRole();
                         }
                     }
@@ -165,20 +105,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean validate(String email, String password) {
-        if(emailValidator(email)){
-            binding.etEmail.requestFocus();
-            return false;
-        }
-        if(password.equals("") && password.length() >= 8){
-            return true;
-        }else{
-            binding.etPassword.requestFocus();
-            return false;
-        }
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length() >= 8;
     }
-
-    private boolean emailValidator(String emailToText) {
-        return emailToText.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(emailToText).matches();
-    }
-
 }
