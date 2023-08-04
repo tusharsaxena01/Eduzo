@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
@@ -164,10 +165,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean validate(String email, String password) {
-        if(email.equals(""))
+        if(emailValidator(email)){
+            binding.etEmail.requestFocus();
             return false;
-        return !password.equals("") && password.length() >= 8;
+        }
+        if(password.equals("") && password.length() >= 8){
+            return true;
+        }else{
+            binding.etPassword.requestFocus();
+            return false;
+        }
     }
 
+    private boolean emailValidator(String emailToText) {
+        return emailToText.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(emailToText).matches();
+    }
 
 }

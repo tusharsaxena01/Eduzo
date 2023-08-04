@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,6 +23,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -174,7 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
                 binding.etName.setError("Invalid Name");
                 getFocusOn(binding.etName);
                 return false;
-            } else if (binding.etEmail.getText().toString().equals("")) {
+            } else if (emailValidator(binding.etEmail.getText().toString())) {
                 binding.etEmail.setError("Invalid Email");
                 getFocusOn(binding.etEmail);
                 return false;
@@ -189,6 +193,10 @@ public class RegisterActivity extends AppCompatActivity {
             }else{
                 return true;
             }
+    }
+
+    private boolean emailValidator(String emailToText) {
+        return emailToText.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(emailToText).matches();
     }
 
     private void getFocusOn(EditText field) {

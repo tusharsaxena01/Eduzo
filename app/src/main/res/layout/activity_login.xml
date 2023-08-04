@@ -93,7 +93,7 @@
                                 android:inputType="textEmailAddress"
                                 android:maxLines="1"
                                 android:hint="@string/login_email_hint"
-                                android:text="bit21csl07@bit.ac.in"
+                                android:text="saxena.abhi7007@gmail.com"
                                 android:drawableStart="@android:drawable/sym_action_email"
                                 android:drawableTint="@color/black"
                                 android:drawablePadding="10dp"/>
