@@ -1,10 +1,13 @@
 package com.bitAndroid.eduzo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.bitAndroid.eduzo.R;
 import com.bitAndroid.eduzo.recyclerview.QuestionModel;
@@ -15,12 +18,21 @@ public class SubmitQuizActivity extends AppCompatActivity {
 
     private DatabaseReference quizRef;
     private Button submitButton;
+    ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_quiz);
 
+        ivBack = findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SubmitQuizActivity.this, NavigationActivity.class);
+                startActivity(intent);
+            }
+        });
         quizRef = FirebaseDatabase.getInstance().getReference().child("Quiz");
 
         submitButton = findViewById(R.id.submitButton);
