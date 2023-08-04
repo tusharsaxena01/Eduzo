@@ -77,42 +77,35 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
     private void checkItemName(NavigationRecyclerData item) {
         switch(item.itemText){
             case "Start Quiz":
-                Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Add working here
                 Intent quizIntent = new Intent(context, QuizActivity.class);
                 context.startActivity(quizIntent);
                 break;
             case "Submit Quiz":
-                Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Add working here
                 Intent submitQuizIntent = new Intent(context, SubmitQuizActivity.class);
                 context.startActivity(submitQuizIntent);
                 break;
             case "Results":
-                Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Add working here
                 Intent resultIntent = new Intent(context, ResultsActivity.class);
                 context.startActivity(resultIntent);
                 break;
             case "History":
-                Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Add working here
                 Intent historyIntent = new Intent(context, HistoryActivity.class);
                 context.startActivity(historyIntent);
                 break;
             case "About Us":
-                Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Add working here
                 showBottomSheetDialog();
                 break;
             case "Settings":
-                Toast.makeText(context, item.itemText+ " Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Add working here
                 showSettingsBottomSheetDialog();
                 break;
 
             case "Logout":
-                Toast.makeText(context, item.itemText+" Clicked", Toast.LENGTH_SHORT).show();
                 // Todo: Move to a function
                 showConfirmDialog();
                 break;
@@ -218,7 +211,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
     }
 
 
-    private void showConfirmDialog() {
+    public void showConfirmDialog() {
         AlertDialog dialog;
         ConfirmDialogBinding confirmDialogBinding = ConfirmDialogBinding.inflate(LayoutInflater.from(context), null, false);
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
