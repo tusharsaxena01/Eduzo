@@ -1,132 +1,65 @@
 package com.bitAndroid.eduzo.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.bitAndroid.eduzo.R;
-import com.bitAndroid.eduzo.databinding.ActivitySubmitQuizBinding;
-import com.bitAndroid.eduzo.recyclerview.QuestionAdapter;
-import com.bitAndroid.eduzo.recyclerview.QuestionData;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.bitAndroid.eduzo.recyclerview.QuestionModel;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
 
 public class SubmitQuizActivity extends AppCompatActivity {
 
-    ActivitySubmitQuizBinding binding;
-    ArrayList<QuestionData> questions = new ArrayList<>();
+    private DatabaseReference quizRef;
+    private Button submitButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySubmitQuizBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_submit_quiz);
 
-        binding.ivBack.setOnClickListener(new View.OnClickListener() {
+        quizRef = FirebaseDatabase.getInstance().getReference().child("Quiz");
+
+        submitButton = findViewById(R.id.submitButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent navigationIntent = new Intent(SubmitQuizActivity.this, NavigationActivity.class);
-                startActivity(navigationIntent);
-                Toast.makeText(SubmitQuizActivity.this, "Back Pressed", Toast.LENGTH_SHORT).show();
+                submitQuiz();
             }
         });
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.spinner_items, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.spinner.setAdapter(adapter);
-
-        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int noOfQues = Integer.parseInt(parent.getItemAtPosition(position).toString());
-                ArrayList<QuestionData> questionData = new ArrayList<>();
-                for (int i = 0; i < noOfQues; i++) {
-                    binding.pbLoading.setVisibility(View.VISIBLE);
-                    questionData.add(new QuestionData());
-                    questions.add(new QuestionData());                    binding.pbLoading.setVisibility(View.VISIBLE);
-                    binding.pbLoading.setVisibility(View.GONE);
-                }
-                QuestionAdapter questionAdapter = new QuestionAdapter(SubmitQuizActivity.this, questionData);
-                binding.rvResults.setLayoutManager(new LinearLayoutManager(SubmitQuizActivity.this, LinearLayoutManager.VERTICAL, false));
-                binding.rvResults.setAdapter(questionAdapter);
-                binding.rvResults.setVisibility(View.VISIBLE);
-                binding.pbLoading.setVisibility(View.GONE);
-                Log.e("Adapter", ""+noOfQues);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                binding.rvResults.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.pbLoading.setVisibility(View.VISIBLE);
-                validateQuestions();
-                binding.pbLoading.setVisibility(View.GONE);
-            }
-        });
-
     }
 
-    private void validateQuestions() {
-        //checking if all options and question is filled and not null
-        for (QuestionData question : questions) {
-            if(!checkIfEmpty(question)){
-                new WelcomeActivity().showErrorDialog("Error, Empty field Found");
-                return;
+    private void submitQuiz() {
+        for (int i = 1; i <= 5; i++) {
+            String question = ((EditText) findViewById(getResources().getIdentifier("question" + i + "EditText", "id", getPackageName()))).getText().toString().trim();
+            String option1 = ((EditText) findViewById(getResources().getIdentifier("option1_" + i + "EditText", "id", getPackageName()))).getText().toString().trim();
+            String option2 = ((EditText) findViewById(getResources().getIdentifier("option2_" + i + "EditText", "id", getPackageName()))).getText().toString().trim();
+            String option3 = ((EditText) findViewById(getResources().getIdentifier("option3_" + i + "EditText", "id", getPackageName()))).getText().toString().trim();
+            String option4 = ((EditText) findViewById(getResources().getIdentifier("option4_" + i + "EditText", "id", getPackageName()))).getText().toString().trim();
+            String answer = ((EditText) findViewById(getResources().getIdentifier("answer_" + i + "EditText", "id", getPackageName()))).getText().toString().trim();
+
+            String questionId = quizRef.push().getKey();
+            if (questionId != null) {
+                QuestionModel questionModel = new QuestionModel(question, option1, option2, option3, option4, answer);
+                quizRef.child(questionId).setValue(questionModel);
             }
         }
 
-        for (int i = 0; i < questions.size(); i++) {
-            saveQuestionToDatabase(questions.get(i), i);
+        // Clear input fields after submission
+        clearFields();
+    }
+
+    private void clearFields() {
+        for (int i = 1; i <= 5; i++) {
+            ((EditText) findViewById(getResources().getIdentifier("question" + i + "EditText", "id", getPackageName()))).setText("");
+            ((EditText) findViewById(getResources().getIdentifier("option1_" + i + "EditText", "id", getPackageName()))).setText("");
+            ((EditText) findViewById(getResources().getIdentifier("option2_" + i + "EditText", "id", getPackageName()))).setText("");
+            ((EditText) findViewById(getResources().getIdentifier("option3_" + i + "EditText", "id", getPackageName()))).setText("");
+            ((EditText) findViewById(getResources().getIdentifier("option4_" + i + "EditText", "id", getPackageName()))).setText("");
+            ((EditText) findViewById(getResources().getIdentifier("answer_" + i + "EditText", "id", getPackageName()))).setText("");
         }
     }
-
-    private void saveQuestionToDatabase(QuestionData data, int i) {
-        FirebaseDatabase.getInstance()
-                .getReference()
-                .child("Questions")
-                .child(String.valueOf(i))
-                .setValue(data)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(SubmitQuizActivity.this, "Question "+i+" Uploaded Successfully", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(SubmitQuizActivity.this, "Question "+i+" not submitted : "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-    private boolean checkIfEmpty(QuestionData question) {
-        if(question.getQuestion().equals(""))
-            return false;
-        if(question.getOption1().equals(""))
-            return false;
-        if(question.getOption2().equals(""))
-            return false;
-        if(question.getOption3().equals(""))
-            return false;
-        if(question.getOption4().equals(""))
-            return false;
-        return !question.getAnswer().equals("");
-    }
-
-
 }

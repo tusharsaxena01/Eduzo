@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.Toast;
 
 import com.bitAndroid.eduzo.classes.UserData;
 import com.bitAndroid.eduzo.fragments.NavigationFragment;
@@ -27,7 +28,14 @@ public class NavigationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityNavigationBinding.inflate(LayoutInflater.from(NavigationActivity.this));
+        try {
+            binding = ActivityNavigationBinding.inflate(LayoutInflater.from(NavigationActivity.this));
+        }catch(Exception e){
+            Toast.makeText(this, "Firebase Server not Responding, Try Again Later", Toast.LENGTH_SHORT).show();
+            finishAffinity();
+//            Toast.makeText(this, "Exiting Application", Toast.LENGTH_SHORT).show();
+            new WelcomeActivity().showErrorDialog("Internet Connection Error");
+        }
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         setContentView(binding.getRoot());
