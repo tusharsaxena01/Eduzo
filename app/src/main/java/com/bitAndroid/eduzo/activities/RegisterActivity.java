@@ -26,6 +26,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        binding.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this, WelcomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
         binding.btnRegister.setOnClickListener(v -> {
             String name = binding.etName.getText().toString().trim();
             String email = binding.etEmail.getText().toString().trim();
